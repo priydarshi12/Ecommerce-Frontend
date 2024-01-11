@@ -29,13 +29,13 @@
 //       email,
 //       password
 //       );
-//       console.log("RESULT", result); 
+//       console.log("RESULT", result);
 //       if(result){
 //         //remove user email from local storage
 //         window.localStorage.removeItem('emailForRegistration')
 //         //get user
 //         let user=auth.currentUser
-       
+
 //         const idTokenResult=await user.getIdTokenResult();
 //         //redux store
 //         console.log('user',user,'idTokenResult',idTokenResult)
@@ -43,11 +43,11 @@
 //         history.push('/');
 //       }
 //      }catch (error) {
-      
+
 //       toast.error(error.message)
 //       }
 //       };
-  
+
 //   const completeRegistrationForm = () => (
 //     <form onSubmit={handleSubmit}>
 //       <input type="email" className="form-control" value={email} disabled />
@@ -82,23 +82,30 @@
 
 // export default RegisterComplete;
 
-
-
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 
 // import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../firebase";
 import { signInWithPopup } from "firebase/auth";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 import { Button } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
-import { useDispatch ,useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+
+const createOrUpdate = async (authtoken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/create-or-update-user`,
+    {},
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
+
 const RegisterComplete = ({ history }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -116,37 +123,47 @@ const RegisterComplete = ({ history }) => {
 
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
-      const { displayName } = user.reloadUserInfo;
       console.log("google result ->", user);
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          name:displayName,
-          token: idTokenResult.token,
-        },
-      });
+      createOrUpdate(idTokenResult.token)
+        .then((res) => {
+          console.log("response from backend on login ", res);
+          const { displayName } = user.reloadUserInfo;
+          console.log("google result token->", displayName);
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              email: user.email,
+              name: displayName,
+              token: idTokenResult.token,
+              role: res.data.role,
+              _id: res.data._id,
+            },
+          });
 
-      history.push("/");
-    } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
+          history.push("/");
+        })
+        .catch((error) => {
+          console.log(error.message);
+          toast.error(error.message);
+        });
+    } catch (err) {
+      toast.error(err.message);
     }
   };
   const completeRegistrationForm = () => (
-    <form >
+    <form>
       <input type="email" className="form-control" value={email} disabled />
       <Button
-            onClick={googleLogin}
-            type="danger"
-            className="mb-3"
-            block
-            shape="round"
-            icon={<GoogleOutlined />}
-            size="large"
-          >
-          signup with Google
-          </Button>
+        onClick={googleLogin}
+        type="danger"
+        className="mb-3"
+        block
+        shape="round"
+        icon={<GoogleOutlined />}
+        size="large"
+      >
+        signup with Google
+      </Button>
     </form>
   );
   return (
