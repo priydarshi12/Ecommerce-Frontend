@@ -52,8 +52,12 @@ const Login = ({ history }) => {
               _id:res.data._id,
             },
           });
-    
-          history.push("/");
+          if(res.data.role==="admin"){
+            history.push("/admin/dashboard");
+          }else{
+            history.push("/user/history");
+          }
+         
         }
       })
         .catch((err) =>{
