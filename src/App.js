@@ -11,6 +11,9 @@ import RegisterComplete from "./pages/auth/RegisterComplete";
 
 import { auth } from "./firebase";
 import {useDispatch} from 'react-redux'
+import { toast } from "react-toastify";
+
+import { currentUser } from "./functons/auth";
 function App() {
   const dispatch=useDispatch();
   useEffect(()=>{
@@ -18,12 +21,43 @@ function App() {
       if(user){
         console.log(user)
         const idTokenResult=await user.getIdTokenResult();
-        dispatch({
-          type:"LOGGED_IN_USER",
-          payload:{
-            email:user.email,
-            token:idTokenResult.token,
-          },
+        // dispatch({
+        //   type:"LOGGED_IN_USER",
+        //   payload:{
+        //     email:user.email,
+        //     token:idTokenResult.token,
+        //   },
+        // });
+        currentUser(idTokenResult.token)
+        .then((res) => {
+          console.log("response from the backend on login",res);
+          if(res.status===201){
+          console.log("response from backend on login ",res);
+          const { displayName } = user.reloadUserInfo;
+          console.log("google result token->", displayName);
+          dispatch({
+            type: "CURRENT_USER",
+            payload: {
+              email: user.email,
+              name: displayName,
+              token: idTokenResult.token,
+              role:res.data.role,
+              _id:res.data._id,
+            },
+          });
+    
+         
+        }
+      })
+        .catch((err) =>{
+          console.log("user not found->",err.message)
+          if(err.response && err.response.status === 401){
+          toast.error("Please register yourself")
+          dispatch({
+            type: "USER NOT FOUND",
+            payload: null,
+          });
+          }
         });
       }
     });

@@ -6,6 +6,8 @@ export function userReducer(state = null, action) {
     return action.payload;
     case "USER NOT FOUND":
     return action.payload;
+    case "CURRENT_USER":
+    return action.payload;
     default:
     return state;
     }

@@ -22,7 +22,6 @@ const loginfn = async (authtoken) => {
 const Login = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
-  const [display,setDisplay]=useState(1);
   // useEffect(() => {
   //   if (user && user.token) history.push("/");
   // }, [user]);
