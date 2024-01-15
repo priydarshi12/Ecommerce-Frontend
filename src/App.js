@@ -7,15 +7,19 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
 import History from "./pages/user/History";
+import Wishlist from "./pages/user/Wishlist";
 import Header from "./components/nav/Header";
 import UserRoute from "./components/routes/UserRoute";
+import AdminRoute from "./components/routes/AdminRoute";
 import RegisterComplete from "./pages/auth/RegisterComplete";
+import AdminDashBoard from "./pages/admin/AdminDashBoard";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import { currentUser } from "./functons/auth";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -57,7 +61,7 @@ function App() {
     });
     //cleanup
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <Header />
@@ -72,6 +76,8 @@ function App() {
           component={RegisterComplete}
         ></Route>
         <UserRoute exact path="/user/history" component={History}></UserRoute>
+        <UserRoute exact path="/user/wishlist" component={Wishlist}></UserRoute>
+        <AdminRoute exact path="/admin/dashboard" component={AdminDashBoard}></AdminRoute>
       </Switch>
     </>
   );

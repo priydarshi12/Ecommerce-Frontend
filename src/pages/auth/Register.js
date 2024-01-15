@@ -9,7 +9,7 @@ const Register = ({history}) => {
   const { user } = useSelector((state) => ({ ...state }));
   useEffect(() => {
     if (user && user.token) history.push("/");
-  }, [user]);
+  }, [user,history]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const config = {
