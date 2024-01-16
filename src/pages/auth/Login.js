@@ -50,6 +50,7 @@ const Login = ({ history }) => {
               token: idTokenResult.token,
               role:res.data.role,
               _id:res.data._id,
+              image:user.picture,
             },
           });
           if(res.data.role==="admin"){

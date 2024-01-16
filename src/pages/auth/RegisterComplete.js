@@ -137,6 +137,7 @@ const RegisterComplete = ({ history }) => {
               token: idTokenResult.token,
               role: res.data.role,
               _id: res.data._id,
+            
             },
           });
 

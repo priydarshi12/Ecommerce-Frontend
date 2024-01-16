@@ -56,6 +56,7 @@ const Header = () => {
       {user && (
         <SubMenu
           icon={<SettingOutlined />}
+          // icon={<img src="https://lh3.googleusercontent.com/a/ACg8ocK2m866nY9-rB6dZaea0Ef1bys0rASew7ET5Jg7j2eJ-Z4=s96-c" alt="new"/>}
           title={user.name}
           className="float-right"
         >
