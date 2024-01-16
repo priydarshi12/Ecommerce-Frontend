@@ -14,7 +14,7 @@ import AdminRoute from "./components/routes/AdminRoute";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import AdminDashBoard from "./pages/admin/AdminDashBoard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
-
+import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -28,7 +28,7 @@ function App() {
       if (user) {
         console.log(user);
         const idTokenResult = await user.getIdTokenResult();
-       
+
         currentUser(idTokenResult.token)
           .then((res) => {
             console.log("response from the backend on login", res);
@@ -78,8 +78,21 @@ function App() {
         ></Route>
         <UserRoute exact path="/user/history" component={History}></UserRoute>
         <UserRoute exact path="/user/wishlist" component={Wishlist}></UserRoute>
-        <AdminRoute exact path="/admin/dashboard" component={AdminDashBoard}></AdminRoute>
-        <AdminRoute exact path="/admin/category" component={CategoryCreate}></AdminRoute>
+        <AdminRoute
+          exact
+          path="/admin/dashboard"
+          component={AdminDashBoard}
+        ></AdminRoute>
+        <AdminRoute
+          exact
+          path="/admin/category"
+          component={CategoryCreate}
+        ></AdminRoute>
+        <AdminRoute
+          exact
+          path="/admin/category/:slug"
+          component={CategoryUpdate}
+        ></AdminRoute>
       </Switch>
     </>
   );
