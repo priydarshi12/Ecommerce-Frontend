@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
+import CategoryForm from "../../../components/forms/CategoryForm";
 import { useSelector } from "react-redux";
 import {
   createCategory,
@@ -44,7 +45,7 @@ const CategoryCreate = () => {
         .then((res) => {
           console.log(res);
           setLoading(false);
-          toast.error(`${res.data.name} deleted`)
+          toast.error(`${res.data.name} deleted`);
           loadCategories();
         })
         .catch((err) => {
@@ -54,25 +55,6 @@ const CategoryCreate = () => {
           }
         });
     }
-  };
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="from-group">
-          <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            autoFocus
-            required
-          />
-          <br />
-          <button className="btn btn-outline-primary">Save</button>
-        </div>
-      </form>
-    );
   };
 
   return (
@@ -87,7 +69,11 @@ const CategoryCreate = () => {
           ) : (
             <h4>Create category</h4>
           )}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
           <hr />
           {categories.map((c) => (
             <div className="alert alert-secondary" key={c.id}>
