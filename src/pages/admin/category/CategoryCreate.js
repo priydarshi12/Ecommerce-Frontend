@@ -10,6 +10,7 @@ import {
 } from "../../../functons/category";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import LocalSearch from "../../../components/forms/LocalSearch";
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
   const [name, setName] = useState("");
@@ -59,10 +60,7 @@ const CategoryCreate = () => {
   };
 
   //step 3
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    setKeyword(e.target.value.toLowerCase());
-  };
+
 
   //step 4
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
@@ -84,14 +82,8 @@ const CategoryCreate = () => {
             setName={setName}
           />
           {/* step 2 */}
-          <input
-            type="search"
-            placeholder="Filter"
-            value={keyword}
-            onChange={handleSearchChange}
-            className="form-control mb-4"
-          />
-          <hr />
+          <LocalSearch keyword={keyword} setKeyword={setKeyword}/>
+          
           {/* step 5 */}
           {categories.filter(searched(keyword)).map((c) => (
             <div className="alert alert-secondary" key={c.id}>
