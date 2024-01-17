@@ -21,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import { currentUser } from "./functons/auth";
+import SubUpdate from "./pages/admin/sub/SubUpdate";
 
 function App() {
   const dispatch = useDispatch();
@@ -98,6 +99,11 @@ function App() {
           exact
           path="/admin/sub"
           component={SubCreate}
+        ></AdminRoute>
+        <AdminRoute
+          exact
+          path="/admin/sub/:slug"
+          component={SubUpdate}
         ></AdminRoute>
       </Switch>
     </>

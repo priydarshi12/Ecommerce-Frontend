@@ -12,6 +12,7 @@ const CategoryForm = (props) => {
         value={props.name}
         autoFocus
         required
+        placeholder='enter the product name'
       />
       <br />
       <button className="btn btn-outline-primary">Save</button>
