@@ -3,26 +3,30 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import CategoryForm from "../../../components/forms/CategoryForm";
 import { useSelector } from "react-redux";
-import { getCategories, removeCategory } from "../../../functons/category";
+import { getCategories } from "../../../functons/category";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import LocalSearch from "../../../components/forms/LocalSearch";
-import { createSub, getSub, removeSub } from "../../../functons/sub";
+import { createSub, getSub, removeSub, getSubs } from "../../../functons/sub";
 const SubCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [subs, setSubs] = useState([]);
   const [category, setCategory] = useState("");
 
   //step 1
   const [keyword, setKeyword] = useState("");
   useEffect(() => {
     loadCategories();
+    loadSubs();
   }, []);
 
   const loadCategories = () =>
     getCategories().then((c) => setCategories(c.data));
+
+  const loadSubs = () => getSubs().then((c) => setSubs(c.data));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,6 +36,7 @@ const SubCreate = () => {
         setLoading(false);
         setName("");
         toast.success(`"${res.data.name}" is created`);
+        loadSubs();
       })
       .catch((err) => {
         setLoading(false);
@@ -47,6 +52,7 @@ const SubCreate = () => {
           console.log(res);
           setLoading(false);
           toast.error(`${res.data.name} deleted`);
+          loadSubs();
         })
         .catch((err) => {
           if (err.response.status === 400) {
@@ -98,6 +104,22 @@ const SubCreate = () => {
           <LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
           {/* step 5 */}
+          {subs.filter(searched(keyword)).map((s) => (
+            <div className="alert alert-secondary" key={s._id}>
+              {s.name}
+              <span
+                onClick={() => handleRemove(s.slug)}
+                className="btn btn-sm float-right"
+              >
+                <DeleteOutlined className="text-danger" />
+              </span>
+              <Link to={`/admin/sub/${s.slug}`}>
+                <span className="btn btn-sm float-right">
+                  <EditOutlined className="text-warning" />
+                </span>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>
