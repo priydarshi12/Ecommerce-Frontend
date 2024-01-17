@@ -15,6 +15,7 @@ import RegisterComplete from "./pages/auth/RegisterComplete";
 import AdminDashBoard from "./pages/admin/AdminDashBoard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
 import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
+import SubCreate from "./pages/admin/sub/SubCreate";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -92,6 +93,11 @@ function App() {
           exact
           path="/admin/category/:slug"
           component={CategoryUpdate}
+        ></AdminRoute>
+        <AdminRoute
+          exact
+          path="/admin/sub"
+          component={SubCreate}
         ></AdminRoute>
       </Switch>
     </>
