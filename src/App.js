@@ -16,6 +16,7 @@ import AdminDashBoard from "./pages/admin/AdminDashBoard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
 import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
 import SubCreate from "./pages/admin/sub/SubCreate";
+import ProductCreate from "./pages/admin/product/ProductCreate";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -104,6 +105,11 @@ function App() {
           exact
           path="/admin/sub/:slug"
           component={SubUpdate}
+        ></AdminRoute>
+        <AdminRoute
+          exact
+          path="/admin/products"
+          component={ProductCreate}
         ></AdminRoute>
       </Switch>
     </>
