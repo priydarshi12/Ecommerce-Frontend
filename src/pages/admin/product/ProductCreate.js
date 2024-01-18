@@ -47,7 +47,8 @@ const ProductCreate = () => {
     createProduct(values, user.token)
       .then((res) => {
         console.log(res);
-        toast.success(`${res.data.title} has beem successfully created`);
+        window.alert(`${res.data.title} has beem successfully created`);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

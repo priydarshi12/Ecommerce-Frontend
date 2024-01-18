@@ -108,7 +108,7 @@ function App() {
         ></AdminRoute>
         <AdminRoute
           exact
-          path="/admin/products"
+          path="/admin/product"
           component={ProductCreate}
         ></AdminRoute>
       </Switch>
