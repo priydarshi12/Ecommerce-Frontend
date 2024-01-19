@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductCreateForm = ({ handleSubmit, handleChange, values ,handleCatagoryChange}) => {
+const ProductCreateForm = ({ handleSubmit, handleChange, values ,handleCatagoryChange,subOptions,showSub}) => {
   // destructure
   const {
     title,
@@ -115,6 +115,7 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values ,handleCatagoryC
             ))}
         </select>
       </div>
+      {subOptions?subOptions.length:"no sub length"}
       <button className="btn btn-outline-info">Save</button>
     </form>
   );
