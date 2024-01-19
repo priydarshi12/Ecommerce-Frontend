@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { createProduct } from "../../../functons/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
+import { getCategories } from "../../../functons/category";
 const initialState = {
   title: "",
   descriptioin: "",
@@ -25,7 +26,12 @@ const ProductCreate = () => {
   //redux
   const { user } = useSelector((state) => ({ ...state }));
 
+  useEffect(() => {
+    loadCategories();
+  }, []);
 
+  const loadCategories = () =>
+    getCategories().then((c) => setValues({...values,categories:c.data}));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,12 +45,10 @@ const ProductCreate = () => {
         console.log(err);
         if (err.response.status === 400) toast.error(err.response.data.err);
       });
-    
   };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
-
   };
 
   return (
@@ -58,7 +62,11 @@ const ProductCreate = () => {
           <h4>Product create</h4>
           <hr />
 
-       <ProductCreateForm handleSubmit={handleSubmit} handleChange={handleChange} values={values}/>
+          <ProductCreateForm
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            values={values}
+          />
         </div>
       </div>
     </div>
