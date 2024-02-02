@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import  LoadingToRedirect  from "./LoadingToRedirect";
 import { currentAdmin } from "../../functons/auth";
+
 const AdminRoute = ({ children, ...rest }) => {
   const { user } = useSelector((state) => ({ ...state }));
     const [ok,setOk]=useState(false);
