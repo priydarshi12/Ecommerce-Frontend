@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
@@ -26,7 +25,8 @@ const initialState = {
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
-  const [showSub,setShowSub]=useState(false);
+  const [showSub, setShowSub] = useState(false);
+  const [loading, setLoading] = useState(false);
   // redux
   const { user } = useSelector((state) => ({ ...state }));
 
@@ -60,13 +60,15 @@ const ProductCreate = () => {
   const handleCatagoryChange = (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
-    setValues({ ...values,subs:[], category: e.target.value });
-    getCategorySubs(e.target.value).then((res) => {
-      console.log("SUB OPTIONS ON CATGORY CLICK", res);
-      setSubOptions(res.data);
-    }).catch((err)=>{
-      toast.error(err.response.data)
-    })
+    setValues({ ...values, subs: [], category: e.target.value });
+    getCategorySubs(e.target.value)
+      .then((res) => {
+        console.log("SUB OPTIONS ON CATGORY CLICK", res);
+        setSubOptions(res.data);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+      });
     setShowSub(true);
   };
 
@@ -80,9 +82,13 @@ const ProductCreate = () => {
         <div className="col-md-10">
           <h4>Product create</h4>
           <hr />
-          {JSON.stringify(values.subs)}
+          {JSON.stringify(values.images)}
           <div className="p-3">
-            <FileUpload/>
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
           </div>
           <ProductCreateForm
             handleSubmit={handleSubmit}
