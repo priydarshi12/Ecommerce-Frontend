@@ -18,6 +18,7 @@ import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
 import SubCreate from "./pages/admin/sub/SubCreate";
 import ProductCreate from "./pages/admin/product/ProductCreate";
 import AllProducts from "./pages/admin/product/AllProducts";
+import ProductUpadte from "./pages/admin/product/ProductUpdate";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -97,11 +98,7 @@ function App() {
           path="/admin/category/:slug"
           component={CategoryUpdate}
         ></AdminRoute>
-        <AdminRoute
-          exact
-          path="/admin/sub"
-          component={SubCreate}
-        ></AdminRoute>
+        <AdminRoute exact path="/admin/sub" component={SubCreate}></AdminRoute>
         <AdminRoute
           exact
           path="/admin/sub/:slug"
@@ -116,6 +113,11 @@ function App() {
           exact
           path="/admin/products"
           component={AllProducts}
+        ></AdminRoute>
+        <AdminRoute
+          exact
+          path="/admin/product/:slug"
+          component={ProductUpadte}
         ></AdminRoute>
       </Switch>
     </>
