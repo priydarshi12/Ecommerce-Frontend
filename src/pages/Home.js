@@ -1,42 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { getProductsByCount } from "../functons/product";
-import ProductCard from "../components/cards/ProductCard";
+import React from "react";
 import Jumbotron from "../components/cards/Jumbotoron";
-import LoadingCard from "../components/cards/LoadingCard";
-const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+import NewArrivals from "../components/home/NewArrivals";
+import BestSellers from "../components/home/BestSellers";
 
-  useEffect(() => {
-    loadAllProduct();
-  }, []);
-  const loadAllProduct = () => {
-    setLoading(true);
-    getProductsByCount(3).then((res) => {
-      setProducts(res.data);
-      setLoading(false);
-    });
-  };
+const Home = () => {
   return (
     <>
-    <div className="jumbotron text-danger h1 font-weight-bold text-center">
-      <Jumbotron text={["Latest Products", "New Arrivals", "Best Sellers"]} />
-    </div>
+      <div className="jumbotron text-danger h1 font-weight-bold text-center">
+        <Jumbotron text={["Latest Products", "New Arrivals", "Best Sellers"]} />
+      </div>
+      <div style={{overflowX:"hidden"}}>
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+        New Arrivals
+      </h4>
+      <NewArrivals />
 
-    <div className="container">
-      {loading ? (
-        <LoadingCard count={3} />
-      ) : (
-        <div className="row">
-          {products.map((product) => (
-            <div key={product._id} className="col-md-4">
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  </>
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+        Best Sellers
+      </h4>
+      <BestSellers />
+      </div>
+      <br />
+      <br />
+    </>
   );
 };
 
