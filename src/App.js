@@ -19,6 +19,7 @@ import SubCreate from "./pages/admin/sub/SubCreate";
 import ProductCreate from "./pages/admin/product/ProductCreate";
 import AllProducts from "./pages/admin/product/AllProducts";
 import ProductUpadte from "./pages/admin/product/ProductUpdate";
+import Product from "./pages/Product";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -119,6 +120,7 @@ function App() {
           path="/admin/product/:slug"
           component={ProductUpadte}
         ></AdminRoute>
+        <Route exact path="/product/:slug" component={Product}/>
       </Switch>
     </>
   );
