@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getProductsByCount } from "../functons/product";
 import ProductCard from "../components/cards/ProductCard";
+import Jumbotron from "../components/cards/Jumbotoron";
+import LoadingCard from "../components/cards/LoadingCard";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,12 +18,15 @@ const Home = () => {
     });
   };
   return (
-<>
-      <div className="jumbotron">
-        {loading ? <h4>Loading...</h4> : <h4>All Products</h4>}
-      </div>
+    <>
+    <div className="jumbotron text-danger h1 font-weight-bold text-center">
+      <Jumbotron text={["Latest Products", "New Arrivals", "Best Sellers"]} />
+    </div>
 
-      <div className="container">
+    <div className="container">
+      {loading ? (
+        <LoadingCard count={3} />
+      ) : (
         <div className="row">
           {products.map((product) => (
             <div key={product._id} className="col-md-4">
@@ -29,8 +34,9 @@ const Home = () => {
             </div>
           ))}
         </div>
-      </div>
-    </>
+      )}
+    </div>
+  </>
   );
 };
 
