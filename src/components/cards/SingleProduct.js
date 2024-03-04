@@ -8,9 +8,12 @@ import Laptop from "../../images/defaultImage.jpg";
 import ProductListItems from "./ProductListItems";
 import StarRating from "react-star-ratings";
 import RatingModal from "../modal/RatingModal";
+import { showAverage } from "../../functons/rating";
+
 const { TabPane } = Tabs;
 
-const SingleProduct = ({ product }) => {
+// this is childrend component of Product page
+const SingleProduct = ({ product, onStarClick, star }) => {
   const { title, images, description, _id } = product;
 
   return (
@@ -36,17 +39,11 @@ const SingleProduct = ({ product }) => {
 
       <div className="col-md-5">
         <h1 className="bg-info p-3">{title}</h1>
-        <StarRating
-          name={_id}
-          numberOfStars={5}
-          rating={2}
-          changeRating={(newRating, name) =>
-            console.log("newRating", newRating, "name", name)
-          }
-          isSelectable={true}
-          starRatedColor="red"
-        />
-
+        {product && product.ratings && product.ratings.length > 0 ? (
+          showAverage(product)
+        ) : (
+          <div className="text-center pt-1 pb-3">No rating yet</div>
+        )}
         <Card
           actions={[
             <>
@@ -56,14 +53,12 @@ const SingleProduct = ({ product }) => {
             <Link to="/">
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </Link>,
-             <RatingModal>
+            <RatingModal>
               <StarRating
                 name={_id}
                 numberOfStars={5}
-                rating={2}
-                changeRating={(newRating, name) =>
-                  console.log("newRating", newRating, "name", name)
-                }
+                rating={star}
+                changeRating={onStarClick}
                 isSelectable={true}
                 starRatedColor="red"
               />
