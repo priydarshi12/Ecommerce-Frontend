@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Menu } from "antd";
 import { auth } from "../../firebase";
-import { signOut } from "firebase/auth";
+
 import {
   AppstoreOutlined,
   SettingOutlined,
@@ -13,7 +13,7 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-
+import Search from "../forms/Search";
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
@@ -76,6 +76,9 @@ const Header = () => {
           </Item>
         </SubMenu>
       )}
+      <span className="float-right p-1">
+        <Search />
+      </span>
     </Menu>
   );
 };
